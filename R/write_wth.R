@@ -8,6 +8,8 @@
 #' @param file_name a character vector of length one that contains the name
 #' of a single DSSAT file into which `wth` will be written
 #'
+#' @param sort_wth a logical value indicating if `wth` must be sorted or not
+#'
 #' @return NULL
 #'
 #' @importFrom dplyr "%>%"
@@ -15,7 +17,7 @@
 #' @importFrom purrr map
 #'
 
-write_wth <- function(wth,file_name){
+write_wth <- function(wth,file_name,sort_wth=FALSE){
 
   location <- attr(wth,'location') %>%
     c('*WEATHER: ',.) %>%
@@ -40,7 +42,8 @@ write_wth <- function(wth,file_name){
   }
 
   tier_output <- wth %>%
-    write_tier(drop_na_rows = FALSE) %>%
+    write_tier(drop_na_rows = FALSE,
+               arrange_tier_data = arrange_wth) %>%
     c(location,'',comments,'',gen_out,.)
 
   write(tier_output,file_name)

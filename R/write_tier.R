@@ -8,6 +8,7 @@
 #'    should be dropped from tier_data
 #' @param drop_na_rows a logical value indicating whether rows containing all NA values
 #'    should be dropped from tier_data
+#' @param sort_tier_data a logical value indicating if tier_data must be sorted or not
 #'
 #' @return a character vector
 #'
@@ -26,7 +27,7 @@
 #'
 
 write_tier <- function(tier_data,pad_name=NULL,drop_duplicate_rows=FALSE,
-                       drop_na_rows=TRUE){
+                       drop_na_rows=TRUE,sort_tier_data=TRUE){
 
   v_fmt <- attr(tier_data,'v_fmt')
 
@@ -63,7 +64,7 @@ write_tier <- function(tier_data,pad_name=NULL,drop_duplicate_rows=FALSE,
         tier_data_tmp <- tier_data %>%
           select(tier_names)
       }
-      if(length(group_cols) > 0 ){
+      if(length(group_cols) > 0 && sort_tier_data){
         tier_data_tmp <- tier_data_tmp %>%
           arrange_at(group_cols)
       }
