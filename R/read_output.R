@@ -24,19 +24,18 @@
 read_output <- function(file_name,col_types=NULL,col_names=NULL,left_justified=NULL,
                         read_only=NULL){
 
-  col_types <- cols(` TNAME\\.*`=col_character(),
-                    ` TNAM\\.+`=col_character(),
-                    ` EXNAME\\.*`=col_character(),
-                    `EXCODE  `=col_character(),
+  col_types <- cols(` TNAME\\.*(?= |$)`=col_character(),
+                    ` TNAM\\.*(?= |$)`=col_character(),
+                    ` EXNAME\\.*(?= |$)`=col_character(),
                     ` FNAM\\.*(?= |$)`=col_character(),
-                    ` WSTA\\.*`=col_character(),
-                    ` SOIL_ID\\.*`=col_character(),
-                    ` MODEL\\.*`=col_character()) %>%
+                    ` WSTA\\.*(?= |$)`=col_character(),
+                    ` SOIL_ID\\.*(?= |$)`=col_character(),
+                    ` MODEL\\.*(?= |$)`=col_character()) %>%
     {.$cols <- c(.$cols,col_types$cols);.}
 
   left_justified <- left_justified %>%
-    c(.,' TNAME\\.*',' TNAM\\.+',' EXNAME\\.*',' FNAM\\.*(?= |$)',' WSTA\\.*',
-      ' SOIL_ID\\.*',' MODEL\\.*','EXCODE  ')
+    c(.,' TNAME\\.*(?= |$)',' TNAM\\.*(?= |$)',' EXNAME\\.*(?= |$)',' FNAM\\.*(?= |$)',
+      ' WSTA\\.*(?= |$)', ' SOIL_ID\\.*(?= |$)',' MODEL\\.*(?= |$)')
 
   col_names <- col_names %>%
     c(.,
