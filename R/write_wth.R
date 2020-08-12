@@ -43,7 +43,7 @@ write_wth <- function(wth,file_name,sort_wth=FALSE){
 
   tier_output <- wth %>%
     write_tier(drop_na_rows = FALSE,
-               arrange_tier_data = arrange_wth) %>%
+               sort_tier_data = sort_wth) %>%
     c(location,'',comments,'',gen_out,.)
 
   write(tier_output,file_name)
